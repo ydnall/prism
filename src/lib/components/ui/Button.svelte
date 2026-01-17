@@ -16,9 +16,9 @@
 	}>();
 
 	const base =
-		'group rounded-xl px-12 py-6 text-xl font-semibold ' +
-		'transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] ' +
-		'disabled:pointer-events-none disabled:opacity-50 whitespace-nowrap';
+		'group rounded-xl px-12 py-6 text-lg font-semibold flex items-center justify-center ' +
+		'transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap ' +
+		'disabled:pointer-events-none disabled:opacity-50 text-center leading-tight';
 
 	const variants: Record<typeof variant, string> = {
 		default: 'bg-pill text-white hover:bg-accent',
