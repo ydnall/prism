@@ -4,9 +4,9 @@ import type { PageLoad } from './$types';
 export const load = (() => {
 	return {
 		metadata: {
-			title: formatPageTitle('Life Audit'),
-			description: siteConfig.description,
-			url: siteConfig.url
+			title: formatPageTitle('Audit'),
+			description: 'The journey of self-discovery has begun',
+			url: `${siteConfig.url}/audit`
 		}
 	};
 }) satisfies PageLoad;

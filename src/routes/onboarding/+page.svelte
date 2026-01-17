@@ -1,11 +1,11 @@
 <script lang="ts">
-	import Hero from './components/Hero.svelte';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import Onboarding from './components/Onboarding.svelte';
 
-	async function handleStart() {
+	async function handleBegin() {
 		try {
-			const resolved = resolve('/onboarding');
+			const resolved = resolve('/audit');
 			await goto(resolved);
 		} catch (error) {
 			console.error('Navigation failed:', error);
@@ -13,4 +13,4 @@
 	}
 </script>
 
-<Hero onStart={handleStart} />
+<Onboarding onBegin={handleBegin} />
