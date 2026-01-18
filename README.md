@@ -1,38 +1,38 @@
-# sv
+# Prism
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Prism is an interactive values audit that guides users through instinct and tradeoff questions, then presents a wrapped-style results experience.
 
-## Creating a project
+## Stack
 
-If you're seeing this, you've probably already done this step. Congrats!
+- SvelteKit (Svelte 5)
+- Tailwind CSS v4
+- Vercel adapter
 
-```sh
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Getting Started
 
 ```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+pnpm install
+pnpm dev
 ```
 
-## Building
-
-To create a production version of your app:
+## Scripts
 
 ```sh
-npm run build
+pnpm dev
+pnpm build
+pnpm preview
+pnpm lint
+pnpm check
+pnpm test
 ```
 
-You can preview the production build with `npm run preview`.
+## Project Structure
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+- `src/routes`: Pages and route-level layouts.
+- `src/lib`: Shared components, data, and stores.
+- `static`: Static assets served as-is.
+
+## Deploy
+
+This project is configured for Vercel via `@sveltejs/adapter-vercel`.
+Deploy by connecting the repo in Vercel or running the Vercel CLI.
