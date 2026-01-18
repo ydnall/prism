@@ -38,8 +38,8 @@
 	<link rel="canonical" href={metadata.url} />
 </svelte:head>
 
-<div class="flex h-svh flex-col">
-	<main class="flex-1 px-6 pt-6 sm:pt-12 md:pt-16">
+<div class="flex h-svh flex-col overflow-hidden">
+	<main class="min-h-0 flex-1 overflow-hidden p-6">
 		{@render children()}
 	</main>
 	<Footer />

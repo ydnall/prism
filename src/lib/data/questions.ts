@@ -54,8 +54,7 @@ const careerInstinct: QuestionGraph = {
 		ci1: {
 			id: 'ci1',
 			type: 'instinct',
-			text:
-				'In a project review, a teammate takes credit for your idea. Do you speak up?',
+			text: 'In a project review, a teammate takes credit for your idea. Do you speak up?',
 			options: [
 				{ text: 'Speak up now', values: { honesty: 3, justice: 2 }, nextId: 'ci2a' },
 				{ text: 'Talk after', values: { harmony: 3, loyalty: 1 }, nextId: 'ci2b' }

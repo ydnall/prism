@@ -26,44 +26,43 @@
 </script>
 
 {#key currentIndex}
-	<div class="flex h-full flex-col justify-between text-center">
-		<!-- Content area (top half) -->
-		<div class="relative flex flex-1 flex-col justify-center">
-			<!-- Phase header -->
-			<div class="mb-4 flex items-center justify-center gap-3 md:mb-12">
-				<span class="text-accent text-lg font-bold">{phaseNumber}</span>
-				<span class="text-text-muted font-medium">{phaseLabel}</span>
-				<span class="text-text-muted/50">·</span>
-				<span class="text-text-muted">{currentIndex + 1}/{totalQuestions}</span>
-			</div>
+	<div class="grid h-full grid-rows-[auto_auto_1fr_auto] text-center">
+		<!-- Phase header -->
+		<div class="flex items-center justify-center gap-3 pt-2 pb-4 md:pt-4 md:pb-12">
+			<span class="text-accent text-lg font-bold">{phaseNumber}</span>
+			<span class="text-text-muted font-medium">{phaseLabel}</span>
+			<span class="text-text-muted/50">·</span>
+			<span class="text-text-muted">{currentIndex + 1}/{totalQuestions}</span>
+		</div>
 
-			<!-- Timer -->
-			<div class="mb-6 flex flex-col items-center md:mb-12">
-				<div class="text-text-muted mb-2 text-sm font-medium tracking-wider uppercase">Time</div>
+		<!-- Timer -->
+		<div class="flex flex-col items-center pb-4">
+			<div class="text-text-muted mb-2 text-sm font-medium tracking-wider uppercase">Time</div>
+			<div
+				class="relative text-5xl font-bold tabular-nums transition-colors duration-300 sm:text-7xl md:text-8xl {timeLeft <=
+				2
+					? 'text-accent'
+					: 'text-text/20'}"
+			>
+				{timeLeft}
 				<div
-					class="relative text-5xl font-bold tabular-nums transition-colors duration-300 sm:text-8xl {timeLeft <=
-					2
-						? 'text-accent'
-						: 'text-text/20'}"
-				>
-					{timeLeft}
-					<div
-						class="absolute -bottom-2 left-1/2 h-1 w-16 -translate-x-1/2 transform rounded-full bg-current opacity-30"
-					></div>
-				</div>
+					class="absolute -bottom-2 left-1/2 h-1 w-16 -translate-x-1/2 transform rounded-full bg-current opacity-30"
+				></div>
 			</div>
+		</div>
 
-			<!-- Question -->
+		<!-- Question -->
+		<div class="flex items-center justify-center px-2">
 			<div class="mx-auto max-w-4xl">
-				<h2 class="text-2xl leading-tight font-bold md:text-4xl lg:text-5xl">
+				<h2 class="text-3xl leading-tight font-bold md:text-4xl lg:text-5xl">
 					{currentQuestion.text}
 				</h2>
 			</div>
 		</div>
 
-		<!-- Answer options -->
+		<!-- Answer options - always at bottom -->
 		<div class="mx-auto flex w-full max-w-2xl flex-col gap-4">
-			{#each currentQuestion.options as option, i}
+			{#each currentQuestion.options as option, i (option.text)}
 				<Button
 					variant="outline"
 					onclick={() => onAnswer(i, option.text, option.values)}

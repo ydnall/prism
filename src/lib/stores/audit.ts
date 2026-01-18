@@ -44,7 +44,7 @@ function createAuditStore() {
 				startTime: Date.now(),
 				answers: [],
 				allocation: { ...initialState.allocation },
-				endTime: null,
+				endTime: null
 			})),
 		addAnswer: (
 			questionId: string,
@@ -112,9 +112,7 @@ function createAuditStore() {
 				if (valueMap) {
 					for (const [value, weight] of Object.entries(valueMap)) {
 						// Scale by allocation (more points = more weight)
-						scores[value as Value] += Math.floor(
-							(points / 12) * weight * ALLOCATION_WEIGHT_SCALE
-						);
+						scores[value as Value] += Math.floor((points / 12) * weight * ALLOCATION_WEIGHT_SCALE);
 					}
 				}
 			}
@@ -146,9 +144,8 @@ function createAuditStore() {
 				fastestResponse: Math.min(...responseTimes),
 				slowestResponse: Math.max(...responseTimes),
 				instinctAnswers: answers.filter((a) => a.questionId[1] === 'i').length,
-				timedOutAnswers: answers.filter(
-					(a) => a.responseTime >= 5000 && a.questionId[1] === 'i'
-				).length
+				timedOutAnswers: answers.filter((a) => a.responseTime >= 5000 && a.questionId[1] === 'i')
+					.length
 			};
 		}
 	};

@@ -254,17 +254,13 @@ function getMaxScoresForTrack(track: QuestionTrack): ValueScores {
 	return addValueScores(addValueScores(instinctMax, tradeoffMax), deepMax);
 }
 
-function getAllocationValueScores(
-	allocation: Record<AllocationCategory, number>
-): ValueScores {
+function getAllocationValueScores(allocation: Record<AllocationCategory, number>): ValueScores {
 	const scores = createEmptyScores();
 	for (const [category, points] of Object.entries(allocation)) {
 		const valueMap = categoryValueMap[category as AllocationCategory];
 		if (valueMap) {
 			for (const [value, weight] of Object.entries(valueMap)) {
-				scores[value as Value] += Math.floor(
-					(points / 12) * weight * ALLOCATION_WEIGHT_SCALE
-				);
+				scores[value as Value] += Math.floor((points / 12) * weight * ALLOCATION_WEIGHT_SCALE);
 			}
 		}
 	}
@@ -330,9 +326,7 @@ function normalizeScores(
 	return {
 		loyalty: maxScores.loyalty ? Math.min(scores.loyalty / maxScores.loyalty, 1) : 0,
 		justice: maxScores.justice ? Math.min(scores.justice / maxScores.justice, 1) : 0,
-		compassion: maxScores.compassion
-			? Math.min(scores.compassion / maxScores.compassion, 1)
-			: 0,
+		compassion: maxScores.compassion ? Math.min(scores.compassion / maxScores.compassion, 1) : 0,
 		ambition: maxScores.ambition ? Math.min(scores.ambition / maxScores.ambition, 1) : 0,
 		security: maxScores.security ? Math.min(scores.security / maxScores.security, 1) : 0,
 		freedom: maxScores.freedom ? Math.min(scores.freedom / maxScores.freedom, 1) : 0,

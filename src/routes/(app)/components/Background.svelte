@@ -60,7 +60,7 @@
 
 		<!-- Black filled -->
 		<svg
-			class="absolute bottom-[18vh] left-[22vw] h-6 w-6 -rotate-[15deg] md:bottom-[14vh] md:left-[20vw] md:h-10 md:w-10"
+			class="absolute bottom-[18vh] left-[22vw] h-6 w-6 -rotate-15 md:bottom-[14vh] md:left-[20vw] md:h-10 md:w-10"
 			viewBox="0 0 100 100"
 			in:scale={{ start: 0.3, duration: 900, delay: 150, easing: backOut }}
 		>
@@ -86,7 +86,7 @@
 
 		<!-- Black filled -->
 		<svg
-			class="absolute right-[24vw] bottom-[22vh] h-7 w-7 rotate-[20deg] md:right-[22vw] md:bottom-[18vh] md:h-11 md:w-11"
+			class="absolute right-[24vw] bottom-[22vh] h-7 w-7 rotate-20 md:right-[22vw] md:bottom-[18vh] md:h-11 md:w-11"
 			viewBox="0 0 100 100"
 			in:scale={{ start: 0.3, duration: 900, delay: 250, easing: backOut }}
 		>

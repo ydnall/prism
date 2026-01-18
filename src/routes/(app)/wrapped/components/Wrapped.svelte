@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { auditStore } from '$lib/stores/audit';
 	import IntroSlide from './IntroSlide.svelte';
 	import ArchetypeSlide from './ArchetypeSlide.svelte';
@@ -62,32 +63,28 @@
 			}));
 		});
 
-		if (answerCount === 0) {
-			goto('/');
-			return;
-		}
-
-		valueScores = auditStore.getValueScores();
-		archetype = calculateArchetype(valueScores, answers);
-		topValues = getTopValues(valueScores, 4).map((v) => ({
-			value: getValueLabel(v.value),
-			score: v.score
-		}));
-		contradictions = findContradictions(valueScores, answers);
-
-		stats = auditStore.getStats();
-		mounted = true;
-
-		const handleKeydown = (e: KeyboardEvent) => {
-			if (e.key === 'ArrowRight' || e.key === ' ') {
-				e.preventDefault();
-				nextSlide();
-			} else if (e.key === 'ArrowLeft') {
-				e.preventDefault();
-				prevSlide();
+		const init = async () => {
+			if (answerCount === 0) {
+				const resolved = resolve('/');
+				await goto(resolved);
+				return;
 			}
+
+			valueScores = auditStore.getValueScores();
+			archetype = calculateArchetype(valueScores, answers);
+			topValues = getTopValues(valueScores, 4).map((v) => ({
+				value: getValueLabel(v.value),
+				score: v.score
+			}));
+			contradictions = findContradictions(valueScores, answers);
+
+			stats = auditStore.getStats();
+			mounted = true;
+
+			window.addEventListener('keydown', handleKeydown);
 		};
-		window.addEventListener('keydown', handleKeydown);
+
+		void init();
 
 		return () => {
 			unsubscribe();
@@ -104,6 +101,16 @@
 	function prevSlide() {
 		if (currentSlide > 0) {
 			currentSlide--;
+		}
+	}
+
+	function handleKeydown(e: KeyboardEvent) {
+		if (e.key === 'ArrowRight' || e.key === ' ') {
+			e.preventDefault();
+			nextSlide();
+		} else if (e.key === 'ArrowLeft') {
+			e.preventDefault();
+			prevSlide();
 		}
 	}
 
@@ -124,7 +131,7 @@
 
 		// Calculate angle to determine if it's a horizontal swipe
 		const angle = Math.abs(Math.atan2(diffY, diffX) * (180 / Math.PI));
-		const isHorizontalSwipe = angle < SWIPE_ANGLE_THRESHOLD || angle > (180 - SWIPE_ANGLE_THRESHOLD);
+		const isHorizontalSwipe = angle < SWIPE_ANGLE_THRESHOLD || angle > 180 - SWIPE_ANGLE_THRESHOLD;
 
 		if (isHorizontalSwipe && Math.abs(diffX) > SWIPE_THRESHOLD) {
 			if (diffX > 0) {
@@ -172,14 +179,14 @@
 
 {#if mounted && archetype}
 	<main
-		class="bg-bg relative h-svh overflow-hidden"
+		class="bg-bg relative h-full min-h-0 overflow-hidden"
 		ontouchstart={handleTouchStart}
 		ontouchend={handleTouchEnd}
 		ontouchcancel={handleTouchCancel}
 	>
 		<!-- Progress bar -->
 		<div class="absolute top-0 right-0 left-0 z-50 flex gap-1 p-3">
-			{#each Array(totalSlides) as _, i}
+			{#each Array.from({ length: totalSlides }, (_, i) => i) as i (i)}
 				<div class="bg-text/10 h-1 flex-1 overflow-hidden rounded-full">
 					<div
 						class="bg-accent h-full transition-all duration-300"
@@ -207,23 +214,25 @@
 		<div class="relative h-full w-full">
 			{#key currentSlide}
 				<div
-					class="animate-in fade-in slide-in-from-right-4 absolute inset-0 flex items-center justify-center p-6 duration-500"
+					class="animate-in fade-in slide-in-from-right-4 absolute inset-0 flex items-stretch justify-center px-6 pt-12 pb-16 duration-500"
 				>
-					{#if currentSlide === 0}
-						<IntroSlide {answerCount} />
-					{:else if currentSlide === 1}
-						<ArchetypeSlide {archetype} />
-					{:else if currentSlide === 2}
-						<ValuesSlide {topValues} />
-					{:else if currentSlide === 3}
-						<ContradictionsSlide {contradictions} />
-					{:else if currentSlide === 4}
-						<DecisionStyleSlide {decisionStyle} {stats} />
-					{:else if currentSlide === 5}
-						<AllocationSlide {allocation} {topAllocation} />
-					{:else if currentSlide === 6}
-						<StatsSlide {stats} {answerCount} {archetype} {topValues} {onRestart} {handleShare} />
-					{/if}
+					<div class="flex h-full w-full max-w-2xl items-center justify-center">
+						{#if currentSlide === 0}
+							<IntroSlide {answerCount} />
+						{:else if currentSlide === 1}
+							<ArchetypeSlide {archetype} />
+						{:else if currentSlide === 2}
+							<ValuesSlide {topValues} />
+						{:else if currentSlide === 3}
+							<ContradictionsSlide {contradictions} />
+						{:else if currentSlide === 4}
+							<DecisionStyleSlide {decisionStyle} {stats} />
+						{:else if currentSlide === 5}
+							<AllocationSlide {allocation} {topAllocation} />
+						{:else if currentSlide === 6}
+							<StatsSlide {stats} {answerCount} {archetype} {topValues} {onRestart} {handleShare} />
+						{/if}
+					</div>
 				</div>
 			{/key}
 		</div>
@@ -231,7 +240,7 @@
 		<!-- Navigation hint -->
 		{#if currentSlide < totalSlides - 1}
 			<div
-				class="animate-in fade-in text-text-muted absolute bottom-4 left-1/2 z-30 -translate-x-1/2 text-xs delay-1000 sm:bottom-6 sm:text-sm"
+				class="animate-in fade-in text-text-muted absolute bottom-2 left-1/2 z-30 -translate-x-1/2 text-xs delay-1000 sm:bottom-3 sm:text-sm md:bottom-6"
 			>
 				<!-- Mobile: Swipe hint -->
 				<span class="md:hidden">Swipe or tap to continue</span>
@@ -239,8 +248,12 @@
 				<!-- Desktop: Keyboard hint -->
 				<span class="hidden items-center gap-2 md:inline-flex">
 					<span class="inline-flex items-center gap-1">
-						<kbd class="border-text/20 bg-text/5 rounded border px-1.5 py-0.5 font-mono text-xs">←</kbd>
-						<kbd class="border-text/20 bg-text/5 rounded border px-1.5 py-0.5 font-mono text-xs">→</kbd>
+						<kbd class="border-text/20 bg-text/5 rounded border px-1.5 py-0.5 font-mono text-xs"
+							>←</kbd
+						>
+						<kbd class="border-text/20 bg-text/5 rounded border px-1.5 py-0.5 font-mono text-xs"
+							>→</kbd
+						>
 					</span>
 					<span class="text-text-muted/60">or click to navigate</span>
 				</span>

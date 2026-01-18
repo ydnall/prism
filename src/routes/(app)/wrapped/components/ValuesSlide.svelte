@@ -6,10 +6,10 @@
 	let { topValues }: Props = $props();
 </script>
 
-<div class="w-full max-w-md">
-	<h2 class="text-text-muted mb-10 text-center text-2xl font-bold">Your Core Values</h2>
+<div class="w-full max-w-xl">
+	<h2 class="text-text-muted mb-8 text-center text-2xl font-bold">Your Core Values</h2>
 	<div class="space-y-6">
-		{#each topValues as { value, score }, i}
+		{#each topValues as { value, score }, i (value)}
 			<div class="flex items-center gap-4">
 				<span class="text-accent w-16 text-5xl font-bold md:text-6xl">0{i + 1}</span>
 				<div class="flex-1">

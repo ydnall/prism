@@ -13,8 +13,8 @@
 	}
 </script>
 
-<div class="flex h-svh flex-col">
-	<main class="flex-1 px-6 py-12 md:py-16">
+<div class="flex h-full min-h-0 flex-col">
+	<div class="min-h-0 flex-1">
 		<Onboarding onBegin={handleBegin} />
-	</main>
+	</div>
 </div>

@@ -44,9 +44,7 @@
 					: null
 	);
 
-	const currentQuestion = $derived(
-		currentGraph ? currentGraph.questions[currentQuestionId] : null
-	);
+	const currentQuestion = $derived(currentGraph ? currentGraph.questions[currentQuestionId] : null);
 
 	function triggerCompletion() {
 		if (completionTriggered) return;

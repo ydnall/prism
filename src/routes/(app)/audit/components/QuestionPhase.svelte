@@ -24,28 +24,27 @@
 </script>
 
 {#key `${phaseLabel}-${currentIndex}`}
-	<div class="flex h-full flex-col justify-between text-center">
-		<!-- Content area (top half) -->
-		<div class="flex flex-1 flex-col justify-center">
-			<!-- Phase header -->
-			<div class="mb-4 flex items-center justify-center gap-3 md:mb-12">
-				<span class="text-accent text-lg font-bold">{phaseNumber}</span>
-				<span class="text-text-muted font-medium">{phaseLabel}</span>
-				<span class="text-text-muted/50">·</span>
-				<span class="text-text-muted">{currentIndex + 1}/{totalQuestions}</span>
-			</div>
+	<div class="grid h-full grid-rows-[auto_1fr_auto] text-center">
+		<!-- Phase header -->
+		<div class="flex items-center justify-center gap-3 pt-2 pb-4 md:pt-4">
+			<span class="text-accent text-lg font-bold">{phaseNumber}</span>
+			<span class="text-text-muted font-medium">{phaseLabel}</span>
+			<span class="text-text-muted/50">·</span>
+			<span class="text-text-muted">{currentIndex + 1}/{totalQuestions}</span>
+		</div>
 
-			<!-- Question -->
+		<!-- Question -->
+		<div class="flex items-center justify-center px-2">
 			<div class="mx-auto max-w-4xl">
-				<h2 class="text-2xl leading-tight font-bold md:text-4xl lg:text-5xl">
+				<h2 class="text-3xl leading-tight font-bold md:text-4xl lg:text-5xl">
 					{currentQuestion.text}
 				</h2>
 			</div>
 		</div>
 
-		<!-- Answer options -->
+		<!-- Answer options - always at bottom -->
 		<div class="mx-auto flex w-full max-w-2xl flex-col gap-4">
-			{#each currentQuestion.options as option, i}
+			{#each currentQuestion.options as option, i (option.text)}
 				<Button
 					variant="outline"
 					onclick={() => onAnswer(i, option.text, option.values)}

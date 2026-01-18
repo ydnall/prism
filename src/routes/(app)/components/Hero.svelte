@@ -36,8 +36,8 @@
 		>
 			<!-- "Get your " -->
 			{#if mounted}
-				<span class="inline-block" in:fly={{ y: -40, duration: 800, easing: quintOut }}>
-					Get your{' '}
+				<span class="inline-block" in:fly={{ y: -40, duration: 800, easing: quintOut }}
+					>Get your
 				</span>
 			{/if}
 
@@ -78,10 +78,8 @@
 					</span>
 					<span
 						class="inline-block"
-						in:fly={{ y: 20, duration: 700, delay: 1350, easing: cubicOut }}
+						in:fly={{ y: 20, duration: 700, delay: 1350, easing: cubicOut }}>value?</span
 					>
-						{' '}value?
-					</span>
 				</h2>
 
 				<!-- Description -->

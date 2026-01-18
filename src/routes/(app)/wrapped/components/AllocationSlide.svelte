@@ -32,14 +32,14 @@
 	});
 </script>
 
-<div class="w-full max-w-md text-center">
+<div class="w-full max-w-xl text-center">
 	<h2 class="text-text-muted mb-2 text-2xl font-bold">Your Focus</h2>
 	<p class="mb-8 text-5xl font-bold md:text-6xl">
 		<span class="text-accent tabular-nums">{displayedPoints}</span>
 		points on<br />{topAllocation().category}
 	</p>
 	<div class="space-y-3">
-		{#each Object.entries(allocation).sort((a, b) => b[1] - a[1]) as [category, points], i}
+		{#each Object.entries(allocation).sort((a, b) => b[1] - a[1]) as [category, points], i (category)}
 			{#if points > 0}
 				<div class="flex items-center gap-3">
 					<span class="w-24 text-left text-sm font-medium">{category}</span>

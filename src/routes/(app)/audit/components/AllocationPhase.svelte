@@ -42,36 +42,40 @@
 	}
 </script>
 
-<div class="flex h-full flex-col justify-between text-center">
-	<!-- Content area (top half) -->
-	<div class="relative flex flex-1 flex-col justify-center">
-		<!-- Phase header -->
-		<div class="mb-3 flex items-center justify-center gap-3 md:mb-6">
-			<span class="text-accent text-lg font-bold">{phaseNumber}</span>
-			<span class="text-text-muted font-medium">{phaseLabel}</span>
-		</div>
+<div class="grid h-full grid-rows-[auto_1fr_auto] text-center">
+	<!-- Phase header -->
+	<div class="flex items-center justify-center gap-3 pt-2 pb-4 md:pt-4">
+		<span class="text-accent text-lg font-bold">{phaseNumber}</span>
+		<span class="text-text-muted font-medium">{phaseLabel}</span>
+	</div>
 
+	<!-- Content area -->
+	<div class="flex min-h-0 flex-col items-center justify-center">
 		<!-- Title and description -->
-		<div class="mx-auto mb-4 max-w-2xl md:mb-12">
-			<h2 class="mb-4 text-center text-2xl leading-tight font-bold md:text-4xl">
+		<div class="mb-0 max-w-2xl pb-3 md:mb-6">
+			<h2 class="mb-2 text-center text-2xl leading-tight font-bold sm:text-4xl">
 				{#if getTokensUsed() === 0}
 					You have {TOTAL_TOKENS} focus points
 				{:else}
 					You have {getTokensRemaining()} focus points left
 				{/if}
 			</h2>
-			<p class="text-text-muted text-center text-lg">Distribute your energy across life areas</p>
+			<p class="text-text-muted text-center text-sm sm:text-lg">
+				Distribute your energy across life areas
+			</p>
 		</div>
 
 		<!-- Allocation controls -->
-		<div class="mx-auto mb-8 max-w-lg space-y-4 md:mb-12 md:space-y-8">
-			{#each allocationCategories as category}
-				<div class="space-y-4">
+		<div class="mx-auto w-full max-w-md space-y-2 px-4 sm:space-y-3 md:space-y-6">
+			{#each allocationCategories as category (category)}
+				<div class="mx-auto w-full space-y-2 sm:space-y-3">
 					<!-- Category header -->
 					<div class="flex items-center justify-between">
 						<div class="text-left">
-							<div class="text-lg font-semibold">{category}</div>
-							<div class="text-text-muted text-sm">{categoryDescriptions[category]}</div>
+							<div class="text-lg font-semibold sm:text-lg">{category}</div>
+							<div class="text-text-muted hidden text-xs sm:block sm:text-sm">
+								{categoryDescriptions[category]}
+							</div>
 						</div>
 						<div class="text-accent text-2xl font-bold tabular-nums">
 							{allocation[category]}
@@ -79,8 +83,8 @@
 					</div>
 
 					<!-- Token dots -->
-					<div class="flex justify-center gap-1 md:gap-2">
-						{#each Array(TOTAL_TOKENS) as _, i}
+					<div class="flex w-full justify-between gap-1 md:gap-2">
+						{#each Array.from({ length: TOTAL_TOKENS }, (_, i) => i) as i (i)}
 							<button
 								onclick={() => {
 									if (i < allocation[category]) {
