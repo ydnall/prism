@@ -12,7 +12,7 @@
 	let { onBegin, showCTA = false }: Props = $props();
 </script>
 
-<!-- Wrapper always exists and reserves space -->
+<!-- Last CTA -->
 <div class="grid h-[180px] w-full place-items-center">
 	{#if showCTA}
 		<div
